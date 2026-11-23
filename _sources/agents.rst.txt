@@ -1,0 +1,19 @@
+Using filamentum with an AI agent
+=================================
+
+An AI coding agent such as Claude Code can run filamentum's jobs in a RELION project: add the External jobs with
+``relion_pipeliner``, read the statistics and propose selection limits. filamentum ships a guide for such agents. Write it into
+the RELION project folder, where Claude Code reads ``CLAUDE.md`` at the start of a session::
+
+    cd /path/to/relion/project
+    filamentum agent-guide --o CLAUDE.md            # or --append to add it to an existing CLAUDE.md
+
+The guide sets ground rules (work through the pipeline, back up ``default_pipeline.star``, ask before using GPUs or deleting
+anything, report numbers from the job files), lists the jobs and their options, gives the ``relion_pipeliner`` commands, and
+explains how to read the outputs and choose selection limits. Edit the copy for your site, e.g. with queue names and
+submission templates.
+
+The guide:
+
+.. literalinclude:: ../filamentum/agent_guide.md
+   :language: markdown

@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Options &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="RELION External jobs" href="relion_jobs.html" />
+    <link rel="prev" title="Micrograph statistics" href="statistics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#units">Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-tracing-options">Common tracing options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#all-options">All options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#trace-relion">trace-relion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trace-maps-tracing-options">trace-maps (tracing options)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train">train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select">select</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#annotate-relion">annotate-relion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-commands">Other commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Options</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/options.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="options">
+<h1>Options<a class="headerlink" href="#options" title="Link to this heading"></a></h1>
+<section id="units">
+<h2>Units<a class="headerlink" href="#units" title="Link to this heading"></a></h2>
+<p>Every command uses the same units. Lengths on the micrograph are in nm (options ending in <code class="docutils literal notranslate"><span class="pre">_nm</span></code>), areas in nm² (<code class="docutils literal notranslate"><span class="pre">_nm2</span></code>), angles in
+degrees (<code class="docutils literal notranslate"><span class="pre">_deg</span></code>), and mask probabilities run from 0 to 1. Quantities that RELION also uses (pixel size, resolution, particle and
+box size, helical rise) are in Å, as in RELION. Older option names in pixels or Å are still accepted and are converted at the run’s
+pixel size. Every tracing job writes all options and their values, the code version and the checksum of the network to
+<code class="docutils literal notranslate"><span class="pre">filament_trace_params.txt</span></code> in its job folder.</p>
+</section>
+<section id="common-tracing-options">
+<h2>Common tracing options<a class="headerlink" href="#common-tracing-options" title="Link to this heading"></a></h2>
+<p>Give these in the tracing job’s <em>Additional arguments</em>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>to …</p></th>
+<th class="head"><p>option (default)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>keep traces away from the micrograph edge</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--border_nm</span></code> (10); <code class="docutils literal notranslate"><span class="pre">--no-border_trim</span></code>: span traces run to the edge</p></td>
+</tr>
+<tr class="row-odd"><td><p>drop short traces (both exports)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--min_trace_nm</span></code> (25)</p></td>
+</tr>
+<tr class="row-even"><td><p>avoid segments across crossings</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--avoid_crossings_nm</span> <span class="pre">R</span></code>: cut traces at crossings and keep every end
+R nm from other traces (off)</p></td>
+</tr>
+<tr class="row-odd"><td><p>trace fainter filaments</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--thresh</span></code> (0.5)</p></td>
+</tr>
+<tr class="row-even"><td><p>make traces stiffer or more flexible</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--spline_nm</span></code> (30), knot spacing of the smoothing spline</p></td>
+</tr>
+<tr class="row-odd"><td><p>set the point spacing of the lines export</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--sample_step_nm</span></code> (5)</p></td>
+</tr>
+<tr class="row-even"><td><p>keep more of curved filaments in the straight export</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--min_piece_nm</span></code> (40), <code class="docutils literal notranslate"><span class="pre">--straight_eps_nm</span></code> (1.5), <code class="docutils literal notranslate"><span class="pre">--straight_deg</span></code> (6)</p></td>
+</tr>
+<tr class="row-odd"><td><p>choose the export</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--export</span> <span class="pre">straight|lines|both</span></code> (both)</p></td>
+</tr>
+<tr class="row-even"><td><p>write RELION 4.0 coordinates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--relion4</span></code> (straight export only)</p></td>
+</tr>
+<tr class="row-odd"><td><p>use the skeleton tracer instead of the span tracer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--no-span</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>reproduce traces made with the old defaults</p></td>
+<td><p>see <code class="docutils literal notranslate"><span class="pre">LEGACY_DEFAULTS</span></code> in <code class="docutils literal notranslate"><span class="pre">filamentum/trace.py</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Large runs: <code class="docutils literal notranslate"><span class="pre">--j</span></code> tracing processes, <code class="docutils literal notranslate"><span class="pre">--fp16</span></code> for half-precision inference, <code class="docutils literal notranslate"><span class="pre">--resume</span></code> after an interruption (micrographs in
+<code class="docutils literal notranslate"><span class="pre">progress.tsv</span></code> are skipped), and <code class="docutils literal notranslate"><span class="pre">--shard</span> <span class="pre">I/N</span></code> to split a run over several jobs (merge their lists with
+<code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">merge-lists</span></code>). A micrograph that cannot be read is logged in <code class="docutils literal notranslate"><span class="pre">failed.txt</span></code> and skipped; the run fails only if more
+than 2% fail (<code class="docutils literal notranslate"><span class="pre">--max_failed_frac</span></code>).</p>
+</section>
+<section id="all-options">
+<h2>All options<a class="headerlink" href="#all-options" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> text of each command. The tracing job (<code class="docutils literal notranslate"><span class="pre">trace-relion</span></code>) also accepts every option of <code class="docutils literal notranslate"><span class="pre">trace-maps</span></code>.</p>
+<section id="trace-relion">
+<h3>trace-relion<a class="headerlink" href="#trace-relion" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum trace-relion [-h] --o O --in_mics IN_MICS [--j J] [--ckpt CKPT] [--angpix ANGPIX]
+                               [--target_angpix TARGET_ANGPIX] [--background_nm BACKGROUND_NM]
+                               [--batch BATCH] [--max MAX] [--fp16] [--loaders LOADERS] [--resume]
+                               [--shard SHARD] [--max_failed_frac MAX_FAILED_FRAC] [--qc QC]
+                               [--qc_plots | --no-qc_plots] [--qc_avoid QC_AVOID] [--save_maps]
+
+Trace filaments in the micrographs of a RELION micrographs.star and write RELION coordinate lists. Made to run as RELION's External job,
+and also usable on its own (no RELION needed) for large runs.
+
+In the GUI (External tab):  executable = filamentum-trace-relion (or scripts/relion_external.sh from a git checkout) ; input micrographs = a micrographs star file (e.g. CtfFind/jobNNN/micrographs_ctf.star)
+RELION calls   &lt;exe&gt; --o External/jobNNN/ --in_mics &lt;star&gt; [--&lt;label&gt; &lt;value&gt; ...] --j &lt;threads&gt; &lt;other arguments&gt;
+and expects RELION_JOB_EXIT_SUCCESS / RELION_JOB_EXIT_FAILURE and RELION_OUTPUT_NODES.star in the job directory.
+
+Network:  --ckpt PATH     trained network (filamentum train: &lt;o&gt;/model.pt; default: the shipped pan network) (Param1 label 'ckpt', or in the other arguments)
+Optional: every option of filamentum trace-maps (--export straight|lines|both, --avoid_crossings_nm 10, --min_piece_nm 25, --spline_nm, ...),
+          --angpix X      pixel size, if the star file has no optics table;   --max N   only the first N micrographs (testing)
+          --batch N       micrographs per GPU batch (8);   --fp16   half-precision inference;   --target_angpix 5.2
+          --loaders N     processes reading and binning micrographs (default min(j, 4));   --j N   processes tracing and writing (4)
+Large runs:
+          --resume        continue an interrupted run in the same --o: micrographs listed in &lt;o&gt;/progress.tsv are skipped
+          --shard I/N     process every N-th micrograph starting at I (0 &lt;= I &lt; N); give each shard its own --o, merge the lists with filamentum merge-lists
+          --max_failed_frac F   a micrograph that cannot be read or traced is logged in &lt;o&gt;/failed.txt and skipped; the run fails (after writing
+                          everything) only if more than this fraction fail (0.02)
+          --qc N          write overlays of N evenly spaced micrographs to &lt;o&gt;/qc/, and plots: &lt;o&gt;/qc/compare/ (summary of this run and of
+                          the earlier QC runs in the same folder on the same micrographs) and &lt;o&gt;/qc/avoid/ (crossing avoidance before/after)
+Each micrograph is read, Fourier-cropped to ~5.2 A/px (what the network was trained on), run through the network in batches on the GPU while
+a pool of --j processes traces and writes the previous ones, and written back in the pixel coordinates of the original micrograph.
+Output nodes: &lt;job&gt;/relion_straight/startend.star (start-end pieces, standard RELION) and &lt;job&gt;/relion_lines/lines.star (RELION 5.1 lines).
+Heavy imports (torch, tracing) happen inside run(), so spawned worker processes stay light.
+
+options:
+  -h, --help            show this help message and exit
+  --o O                 output (job) directory
+  --in_mics IN_MICS     micrographs STAR file (RELION passes the "Input micrographs" of the External job)
+  --j J                 processes tracing and writing (RELION passes the number of threads)
+  --ckpt CKPT           trained network (filamentum train: &lt;o&gt;/model.pt); default: the shipped pan network
+  --angpix ANGPIX       pixel size of the micrographs (A); 0 = from the optics table
+  --target_angpix TARGET_ANGPIX
+                        micrographs are Fourier-cropped to this pixel size (A), what the network was trained
+                        on; default: from the network, else 5.2
+  --background_nm BACKGROUND_NM
+                        subtract a Gaussian background of this scale (sigma, nm) before normalising, as
+                        cryoSPARC patch motion does; default: from the network's metadata, else 0 = off;
+                        needed for RELION-corrected micrographs with a weights-only network
+  --batch BATCH         micrographs per GPU batch
+  --max MAX             only the first N micrographs (testing); 0 = all
+  --fp16                half-precision inference
+  --loaders LOADERS     processes reading and binning micrographs; 0 = min(j, 4)
+  --resume              skip micrographs already listed in &lt;o&gt;/progress.tsv
+  --shard SHARD         I/N: process every N-th micrograph starting at I
+  --max_failed_frac MAX_FAILED_FRAC
+                        fail the run (after writing everything) if more than this fraction of micrographs
+                        fail
+  --qc QC               QC overlays (and network output) of this many evenly spaced micrographs in &lt;o&gt;/qc/
+  --qc_plots, --no-qc_plots
+                        with --qc: summary plots in &lt;o&gt;/qc/compare/ (this run and the earlier QC runs in the
+                        same folder on the same micrographs) and crossing-avoidance close-ups in
+                        &lt;o&gt;/qc/avoid/ (default: True)
+  --qc_avoid QC_AVOID   with --qc: micrographs with crossing-avoidance close-ups (before/after
+                        --avoid_crossings_nm, the run's value or 10 nm); 0 = none
+  --save_maps           keep the network mask, orientation and traces of every micrograph in &lt;o&gt;/maps/ (~0.4
+                        MB each) for annotate_particles.py (crossing metadata per particle)
+</pre></div>
+</div>
+</section>
+<section id="trace-maps-tracing-options">
+<h3>trace-maps (tracing options)<a class="headerlink" href="#trace-maps-tracing-options" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum trace-maps [-h] --pred PRED [--pos POS] [--neg NEG] --out OUT [--thresh THRESH]
+                             [--min_blob_nm2 MIN_BLOB_NM2] [--smooth_nm SMOOTH_NM] [--split_deg SPLIT_DEG]
+                             [--gap_nm GAP_NM] [--joint_deg JOINT_DEG] [--ori_deg ORI_DEG]
+                             [--min_trace_nm MIN_TRACE_NM] [--angpix ANGPIX]
+                             [--export {straight,lines,both,none}] [--straight_eps_nm STRAIGHT_EPS_NM]
+                             [--straight_deg STRAIGHT_DEG] [--min_piece_nm MIN_PIECE_NM]
+                             [--sample_step_nm SAMPLE_STEP_NM] [--export_scale EXPORT_SCALE]
+                             [--export_prefix EXPORT_PREFIX] [--relion4]
+                             [--crossing_fix | --no-crossing_fix] [--ori_split_deg ORI_SPLIT_DEG]
+                             [--near_nm NEAR_NM] [--border_nm BORDER_NM] [--border_trim | --no-border_trim]
+                             [--link_base_nm LINK_BASE_NM] [--avoid_crossings_nm AVOID_CROSSINGS_NM]
+                             [--avoid_cap AVOID_CAP] [--extend_nm EXTEND_NM] [--extend_prob EXTEND_PROB]
+                             [--cut_nm CUT_NM] [--reach_nm REACH_NM] [--span | --no-span]
+                             [--span_stiff_nm SPAN_STIFF_NM] [--span_band_nm SPAN_BAND_NM]
+                             [--span_win0_nm SPAN_WIN0_NM] [--span_fit_min SPAN_FIT_MIN]
+                             [--span_seed SPAN_SEED] [--span_keep SPAN_KEEP]
+                             [--span_keep_mean SPAN_KEEP_MEAN] [--span_gap_nm SPAN_GAP_NM]
+                             [--span_clear_nm SPAN_CLEAR_NM] [--span_sup_mask]
+                             [--span_fail_damp_nm SPAN_FAIL_DAMP_NM] [--span_join | --no-span_join]
+                             [--span_join_nm SPAN_JOIN_NM] [--span_join_deg SPAN_JOIN_DEG]
+                             [--span_finish | --no-span_finish] [--span_fill | --no-span_fill]
+                             [--span_max SPAN_MAX] [--through_nm THROUGH_NM] [--through_prob THROUGH_PROB]
+                             [--through_bridge_prob THROUGH_BRIDGE_PROB] [--through_near_nm THROUGH_NEAR_NM]
+                             [--through_clear_nm THROUGH_CLEAR_NM] [--through_base_nm THROUGH_BASE_NM]
+                             [--through_min_nm THROUGH_MIN_NM] [--bridge_prob BRIDGE_PROB]
+                             [--spline_nm SPLINE_NM] [--snap | --no-snap] [--snap_alpha SNAP_ALPHA]
+                             [--snap_beta SNAP_BETA] [--snap_weight SNAP_WEIGHT]
+                             [--snap_sigma_nm SNAP_SIGMA_NM] [--snap_iter SNAP_ITER]
+                             [--snap_gamma SNAP_GAMMA] [--curv_nm CURV_NM] [--rough_nm ROUGH_NM] [--max MAX]
+
+Turn predict's mask + orientation maps into filament traces (heuristics only, no training).
+
+  filamentum trace-maps --pred RUN/pred --pos DATA/export_subset --neg DATA/negatives --out RUN/traces
+
+Steps: threshold -&gt; skeleton -&gt; cut at junctions -&gt; order pixels into paths -&gt; split at sharp bends -&gt;
+link collinear path ends (geometry + predicted orientation; this also joins crossings) -&gt; smooth -&gt;
+drop short traces -&gt; active-contour refinement (optional) -&gt; cubic B-spline fit (knots every --spline_nm).
+Crossing fix (on by default, --no_crossing_fix to skip): paths are also split where they leave the predicted orientation next to
+another skeleton piece, cut at the image border, and re-linked by continuation (tangent + curvature arc, mutual best partner).
+Writes per micrograph: overlay png (trace ids), start/end picks in RELION manual-pick format (original pixel coordinates), and out/traces.tsv + out/chains.tsv.
+
+options:
+  -h, --help            show this help message and exit
+  --pred PRED           predict output dir with *.npz
+  --pos POS
+  --neg NEG
+  --out OUT
+  --thresh THRESH       mask probability above which a pixel counts as filament
+  --min_blob_nm2 MIN_BLOB_NM2
+                        skeleton tracer: drop mask blobs smaller than this area (nm^2)
+  --smooth_nm SMOOTH_NM
+                        skeleton tracer: Gaussian smoothing of paths (nm)
+  --split_deg SPLIT_DEG
+                        skeleton tracer: split paths at bends sharper than this (deg)
+  --gap_nm GAP_NM       skeleton tracer: largest gap to link (nm)
+  --joint_deg JOINT_DEG
+                        skeleton tracer: largest bend at a link (deg)
+  --ori_deg ORI_DEG     skeleton tracer: largest disagreement of the predicted axes at a link (deg)
+  --min_trace_nm MIN_TRACE_NM
+                        drop traces shorter than this (nm); acts on both exports
+  --angpix ANGPIX       pixel size of the binned image the network sees (A); set by the tracing job
+  --export {straight,lines,both,none}
+                        RELION coordinate files: straight = start/end pairs (standard RELION), lines =
+                        polylines with a path id (RELION 5.1 amyloid format)
+  --straight_eps_nm STRAIGHT_EPS_NM
+                        straight export: largest distance of a piece from the trace (nm)
+  --straight_deg STRAIGHT_DEG
+                        straight export: largest angle between a piece and the local trace direction at its
+                        ends (deg)
+  --min_piece_nm MIN_PIECE_NM
+                        straight export only: drop straight pieces shorter than this (nm); the lines export
+                        keeps them (see --min_trace_nm)
+  --sample_step_nm SAMPLE_STEP_NM
+                        lines export: a point every this many nm along each path
+  --export_scale EXPORT_SCALE
+                        multiply coordinates by this when writing traces.tsv and the RELION files: 8 =
+                        original pixels of the exported data, 1 = the binned micrographs themselves
+  --export_prefix EXPORT_PREFIX
+                        directory prefix written into the coordinate lists (e.g. ManualPick/job999), so the
+                        export directories can be dropped into a RELION project
+  --relion4             write for RELION 4.0: straight export only, coordinate list without the RELION 5
+                        general block, RELION 4 node type
+  --crossing_fix, --no-crossing_fix
+                        skeleton tracer: orientation split, persistent-orientation rejoin and border rule
+                        (--no-crossing_fix: off) (default: True)
+  --ori_split_deg ORI_SPLIT_DEG
+                        split where path and predicted orientation differ by more than this (deg) ...
+  --near_nm NEAR_NM     ... and another skeleton piece lies within this distance (nm)
+  --border_nm BORDER_NM
+                        keep traces this far from the image border: paths are cut there (skeleton tracer) or
+                        not traced there (span tracer), and those ends are never linked (nm; 2.08 before
+                        2026-11-23)
+  --border_trim, --no-border_trim
+                        span tracer: cut traces at --border_nm (before 0.1.1 the span tracer only kept its
+                        start points off the border; --no-border_trim reproduces that) (default: True)
+  --link_base_nm LINK_BASE_NM
+                        baseline for the end tangent and curvature when linking, with the crossing fix (nm)
+  --avoid_crossings_nm AVOID_CROSSINGS_NM
+                        do not continue traces across crossings (span tracer: cut them there; skeleton
+                        tracer: do not rejoin), and retreat every trace end until it is this far from other
+                        traces (nm); switches the through rule off; 0 = off
+  --avoid_cap AVOID_CAP
+                        avoid crossings: retreat at most this multiple of the distance (shallower crossings
+                        keep some overlap)
+  --extend_nm EXTEND_NM
+                        crossing fix: extend unlinked ends along their arc up to this far (nm); 0 = off
+  --extend_prob EXTEND_PROB
+                        crossing fix: stop extending where the mask probability falls below this
+  --cut_nm CUT_NM       crossing fix: cut back linked ends by this much (nm)
+  --reach_nm REACH_NM   crossing fix: follow each end this far to look for a partner (nm)
+  --span, --no-span     span tracer (default): fit stiff image-spanning splines, prune by support; --no-
+                        span: the skeleton tracer (default: True)
+  --span_stiff_nm SPAN_STIFF_NM
+                        ... stiffness: smoothing-spline length scale (nm)
+  --span_band_nm SPAN_BAND_NM
+                        ... half-width of the band searched across the curve (nm)
+  --span_win0_nm SPAN_WIN0_NM
+                        ... initial fitted window around the seed (nm), grown x1.6 per round
+  --span_fit_min SPAN_FIT_MIN
+                        ... ignore samples below this aligned mask probability when fitting
+  --span_seed SPAN_SEED
+                        ... stop when the strongest unexplained ridge is below this
+  --span_keep SPAN_KEEP
+                        ... keep curve where aligned unexplained probability &gt;= this
+  --span_keep_mean SPAN_KEEP_MEAN
+                        ... and the kept stretch averages &gt;= this
+  --span_gap_nm SPAN_GAP_NM
+                        ... bridge unsupported gaps up to this long (nm)
+  --span_clear_nm SPAN_CLEAR_NM
+                        ... explain away the aligned map within this distance of a kept curve (nm)
+  --span_sup_mask       ... measure support on the map itself, not the explained-away residual
+  --span_fail_damp_nm SPAN_FAIL_DAMP_NM
+                        ... when a seed keeps nothing, damp the map along its supported curve within this
+                        distance (nm), so the same weak ridge does not seed again (0: only around the seed)
+  --span_join, --no-span_join
+                        ... join head-on span ends (default: True)
+  --span_join_nm SPAN_JOIN_NM
+                        ... largest end gap for --span_join (nm)
+  --span_join_deg SPAN_JOIN_DEG
+                        ... largest bend for --span_join (deg)
+  --span_finish, --no-span_finish
+                        ... finish with the usual snap + spline refinement (default: True)
+  --span_fill, --no-span_fill
+                        ... add stretches of the skeleton tracer that no span trace covers (default: True)
+  --span_max SPAN_MAX   ... at most this many seeds
+  --through_nm THROUGH_NM
+                        crossing fix: filaments rarely end on another filament; extend an unlinked end that
+                        meets another trace through it, on weak evidence, up to this far (nm); also bridges
+                        across another trace then need only --through_prob; 0 = off (also off with
+                        --avoid_crossings_nm)
+  --through_prob THROUGH_PROB
+                        ... weak evidence: mask probability needed beyond the crossed trace
+  --through_bridge_prob THROUGH_BRIDGE_PROB
+                        ... a link whose bridge crosses another trace needs only this mask probability (20th
+                        percentile) instead of --bridge_prob
+  --through_near_nm THROUGH_NEAR_NM
+                        ... the end must meet the other trace within this distance (nm)
+  --through_clear_nm THROUGH_CLEAR_NM
+                        ... take the end direction from where the trace is at least this far from other
+                        traces (nm), dropping the stretch pulled toward the crossing; 0 = off
+  --through_base_nm THROUGH_BASE_NM
+                        ... baseline for that direction and curvature (nm)
+  --through_min_nm THROUGH_MIN_NM
+                        ... keep an extension only with at least this much evidence beyond the crossed trace
+                        (nm)
+  --bridge_prob BRIDGE_PROB
+                        crossing fix: 20th percentile of the mask probability along a bridge must exceed
+                        this
+  --spline_nm SPLINE_NM
+                        cubic B-spline knot spacing (nm); 0 = off. Applied last
+  --snap, --no-snap     active-contour refinement of every trace (--no-snap: off) (default: True)
+  --snap_alpha SNAP_ALPHA
+                        contour stretch energy
+  --snap_beta SNAP_BETA
+                        contour curvature energy (higher = stiffer)
+  --snap_weight SNAP_WEIGHT
+                        weight of the image force
+  --snap_sigma_nm SNAP_SIGMA_NM
+                        smoothing of the mask probability (nm)
+  --snap_iter SNAP_ITER
+                        iterations of the active-contour refinement
+  --snap_gamma SNAP_GAMMA
+                        step damping (higher = smaller steps)
+  --curv_nm CURV_NM     baseline for the curvature statistics (nm)
+  --rough_nm ROUGH_NM   sigma of the smooth reference for the roughness statistic (nm)
+  --max MAX
+</pre></div>
+</div>
+</section>
+<section id="train">
+<h3>train<a class="headerlink" href="#train" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum train [-h] --picks PICKS --o O [--mics MICS] [--angpix ANGPIX] [--project PROJECT]
+                        [--empty EMPTY] [--init INIT] [--width WIDTH] [--depth DEPTH] [--val_frac VAL_FRAC]
+                        [--iters ITERS] [--batch BATCH] [--crop CROP] [--lr LR] [--val_every VAL_EVERY]
+                        [--seed SEED] [--j J] [--threads THREADS] [--fast {auto,on,off}]
+
+filamentum train: fine-tune the shipped pan network (or train one from scratch) on manual start-end picks of a RELION
+ManualPick job, and keep the checkpoint that traces the validation micrographs best.
+
+  filamentum train --picks ManualPick/job012/ --o Filamentum/train1/
+
+As a RELION External job (filamentum-train-relion, or scripts/relion_external_train.sh from a git checkout): "Input coordinates" =
+the ManualPick job's manualpick.star, optionally "Input micrographs" = a micrographs STAR file with the optics table; threads = the
+processes that trace the validation micrographs; submit to a GPU queue. The kept network, &lt;job&gt;/model.pt, is the job's output node:
+give it to the tracing job as Param1 label 'ckpt'.
+
+Recipe: micrographs Fourier-cropped to 5.2 A/px, picks merged into filaments
+(bends allowed), 3000 steps of 16 random 320 x 320 crops, loss 'base' (mask BCE + Dice + orientation), a checkpoint every 250
+steps. Each checkpoint, and the starting network itself, traces the validation micrographs with the default tracer; the one with
+the best length F1 pooled over them is kept (&lt;o&gt;/model.pt). With few picks the starting network often stays the best, which is
+why it is a candidate. Training is as fast as the hardware allows without changing the result: the micrographs are held as tensors
+and crops are cut and augmented with batched torch operations (on a GPU, on the GPU), and on a GPU the network runs in channels-last
+layout with fp16 mixed precision. On a CPU it runs in fp32 and in the usual layout, which was faster there (Xeon Gold 6130:
+0.40 s per step against 0.69 s with channels-last).
+
+options:
+  -h, --help            show this help message and exit
+  --picks PICKS, --in_coords PICKS
+                        ManualPick job folder (start-end picks) or its manualpick.star (RELION: "Input
+                        coordinates")
+  --o O                 output folder: model.pt (the kept network), val_scores.tsv, train_stats.json
+  --mics MICS, --in_mics MICS
+                        micrographs STAR file with the optics table (pixel size); default:
+                        &lt;picks&gt;/micrographs_selected.star
+  --angpix ANGPIX       pixel size of the micrographs (A); 0 = from the optics table
+  --project PROJECT     RELION project folder the paths in the STAR files are relative to
+  --empty EMPTY         STAR file of micrographs known to have no filaments (used as negatives)
+  --init INIT           starting network: 'pan' (shipped, trained on A-beta42 and ten other filament data
+                        sets), 'abeta42' (the earlier A-beta42-only network; git checkout only), a
+                        checkpoint, or 'none' (from scratch)
+  --width WIDTH         --init none: network width relative to the original (32...256 channels)
+  --depth DEPTH         --init none: U-Net levels
+  --val_frac VAL_FRAC   share of the picked micrographs held out to pick the checkpoint (at least 1)
+  --iters ITERS
+  --batch BATCH
+  --crop CROP
+  --lr LR
+  --val_every VAL_EVERY
+  --seed SEED
+  --j J                 processes tracing the validation micrographs while training continues
+  --threads THREADS     torch threads (CPU); 0 = torch default
+  --fast {auto,on,off}  speed-ups: auto = batches cut on the device, plus channels-last and fp16 mixed
+                        precision on a GPU; on = all of them also on a CPU; off = crops cut in NumPy, fp32
+                        on a CPU
+</pre></div>
+</div>
+</section>
+<section id="select">
+<h3>select<a class="headerlink" href="#select" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum select [-h] --o O [--tracer_job TRACER_JOB] [--in_mics IN_MICS] [--min MIN] [--max MAX]
+                         [--coords COORDS] [--no-coords]
+
+filamentum select: keep the micrographs whose tracing statistics pass given limits, as a micrographs STAR file. Runs as a RELION
+External job (filamentum-select-relion, or scripts/relion_external_select.sh from a git checkout) or on the command line:
+
+  filamentum select --o Select/mics1/ --tracer_job External/job030/ --min length_um=1,n_traces=5 --max crossings_per_um=2
+
+In RELION: Input micrographs = the micrographs to select from (default: the tracing job's input); Param1 label 'tracer_job', value
+the tracing job's folder (several, comma-separated, e.g. shards); Param2 label 'min', value 'stat=value[,stat=value]'; Param3 label
+'max', likewise. Shell-safe on purpose: RELION puts the values on a command line, so no spaces, '&lt;' or '&gt;'.
+
+Statistics (one row per micrograph in the tracing job's progress.tsv; lengths are arc lengths):
+  n_traces              traces (= paths of the lines export)
+  length_um             their total length (um)
+  median_trace_nm       median trace length (nm)
+  max_trace_nm          longest trace (nm)
+  straight_pieces       straight export: start-end pieces kept
+  straight_kept_um      straight export: length of the pieces kept (um)
+  straight_dropped_um   straight export: length of the pieces shorter than --min_piece_nm (um)
+  n_crossings           places where two traces cross
+  length_per_um2        traced length per area (um per um^2): how crowded the micrograph is
+  crossings_per_um      crossings per um of traced length
+Tracing jobs made before 2026-11-23 have only the first two and the straight export.
+
+A micrograph is kept if every condition holds; micrographs without statistics (not traced, or failed to read) are left out and
+counted. Writes &lt;o&gt;micrographs.star (all columns and the optics table of the input, registered as the job's output node),
+&lt;o&gt;micrograph_stats.tsv (every micrograph with its statistics and why it was left out), &lt;o&gt;select_summary.png (histograms of the
+statistics used, with the limits) and &lt;o&gt;logfile.pdf (all statistics, kept micrographs highlighted; RELION's Display opens it).
+Unless --coords no: the tracing job's coordinate lists (relion_lines/lines.star, relion_straight/startend.star) with only the kept
+micrographs, registered as output nodes, so that Display shows the kept micrographs with their traces in the manual picker.
+The tracing job itself writes the same log file for all its micrographs, to choose the limits from.
+
+options:
+  -h, --help            show this help message and exit
+  --o O                 output (job) folder
+  --tracer_job TRACER_JOB
+                        folder of the tracing job (comma-separated for several, e.g. shards)
+  --in_mics IN_MICS     micrographs STAR file to select from (RELION: Input micrographs); default: the
+                        tracing job's input
+  --min MIN             lower limits, stat=value[,stat=value]; repeatable
+  --max MAX             upper limits, stat=value[,stat=value]; repeatable
+  --coords COORDS       also write the tracing job's coordinate lists restricted to the kept micrographs, as
+                        output nodes that RELION's Display opens in the manual picker (default yes; RELION:
+                        Param label coords, value no to leave them out)
+  --no-coords           do not write the coordinate lists
+</pre></div>
+</div>
+</section>
+<section id="annotate-relion">
+<h3>annotate-relion<a class="headerlink" href="#annotate-relion" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum annotate-relion [-h] --o O --in_parts IN_PARTS --tracer_job TRACER_JOB
+                                  [--particle_diameter PARTICLE_DIAMETER] [--target_res TARGET_RES]
+                                  [--tube_diameter TUBE_DIAMETER] [--zscore ZSCORE] [--j J]
+
+Annotate extracted filament segments with what else lies near them: crossing and neighbouring filaments, per particle.
+
+Made to run as RELION's External job (filamentum-annotate-relion, or scripts/relion_external_annotate.sh from a git checkout), and usable on its own:
+  RELION calls   &lt;exe&gt; --o External/jobNNN/ --in_parts &lt;particles.star&gt; --tracer_job &lt;job dir&gt; [--&lt;label&gt; &lt;value&gt; ...] --j &lt;threads&gt;
+
+Needed:   --in_parts      particles (e.g. Extract/jobNNN/particles.star, or any later _data.star)
+          --tracer_job    the tracing job (filamentum trace-relion) that traced these micrographs, run with --save_maps (reads &lt;job&gt;/maps/*.npz)
+Optional: --particle_diameter 150   (A) circle in which neighbours count, plus the delocalisation radius below
+          --target_res 4.75         (A) resolution for the CTF delocalisation radius R = lambda * defocus / target_res (per particle)
+          --tube_diameter 100       (A) mask pixels within half of this of the particle's own trace belong to it, not to a neighbour
+          --zscore LparA            metric also written into rlnParticleSelectZScore, so RELION's Subset Selection can threshold on it
+          --j 4                     processes (one micrograph at a time each)
+
+Columns added (custom labels: RELION keeps them through selection, classification and refinement, but only rlnParticleSelectZScore
+can be selected on inside RELION):
+  rlnFtrHasMap        1 if the micrograph was traced with --save_maps, else 0 (then all values below are -1)
+  rlnFtrOwnDistA      distance from the particle centre to its own (nearest) trace (A); large = particle not on a traced filament
+  rlnFtrRdelocA       CTF delocalisation radius for this particle (A)
+  rlnFtrNearestA      distance to the nearest point of any OTHER trace (A; -1 if none on the micrograph)
+  rlnFtrNearestRdeloc rlnFtrNearestA / rlnFtrRdelocA
+  rlnFtrNother        number of other traces entering the circle (radius particle_diameter/2 + R)
+  rlnFtrMinAngle      smallest angle between the particle's axis and another trace inside the circle (deg, 0 = parallel; -1 if none)
+  rlnFtrLparA         other-trace length inside the circle weighted by cos^2(angle): density aligned with the particle (A)
+  rlnFtrLperpA        same, weighted by sin^2(angle): density crossing it (A).  LparA + LperpA = other-trace length in the circle
+  rlnFtrMaskPar       as LparA but from the network's mask (probability x cos^2 of the predicted orientation), as a fraction of the
+                      circle's area, excluding the particle's own tube: also counts density the tracer did not trace
+  rlnFtrMaskPerp      the same with sin^2
+Geometry: all in the binned image of the tracer (the maps), converted to A with its pixel size. The particle centre is
+rlnCoordinate minus rlnOrigin (A) / micrograph pixel size, as RELION defines it. The particle's axis is the direction of its own
+trace at the closest point, so no assumption about RELION's psi convention is needed.
+
+options:
+  -h, --help            show this help message and exit
+  --o O
+  --in_parts IN_PARTS
+  --tracer_job TRACER_JOB
+  --particle_diameter PARTICLE_DIAMETER
+  --target_res TARGET_RES
+  --tube_diameter TUBE_DIAMETER
+  --zscore ZSCORE
+  --j J
+</pre></div>
+</div>
+</section>
+<section id="other-commands">
+<h3>Other commands<a class="headerlink" href="#other-commands" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">predict</span></code>, <code class="docutils literal notranslate"><span class="pre">compare-runs</span></code>, <code class="docutils literal notranslate"><span class="pre">compare-traces</span></code>, <code class="docutils literal notranslate"><span class="pre">split-preview</span></code>, <code class="docutils literal notranslate"><span class="pre">merge-lists</span></code> and <code class="docutils literal notranslate"><span class="pre">check-env</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum compare-runs [-h] --out OUT [--n N] [--angpix ANGPIX] [--step_A STEP_A] [--box_px BOX_PX]
+                               [--bytes BYTES]
+                               runs [runs ...]
+
+Compare runs of relion_filament_trace.py with different tracing settings, to choose the settings for a large run.
+
+  cd &lt;RELION project&gt;
+  python scripts/compare_runs.py RUN_A/ RUN_B/ ... --out compare/ [--n 8] [--angpix X]
+
+Each RUN is the --o of a relion_filament_trace.py run on the SAME micrographs (e.g. one split of 100) with --qc N and the straight export.
+Writes into --out:
+  summary.png   per run: the length of the two exports -- the lines export (every trace, = traced length) and the straight export
+                (pieces kept, and those shorter than --min_piece_nm dropped) -- with the number of pieces; the distribution of piece
+                lengths; and how much filament length is in pieces of at least a given length (what survives a minimum segment length).
+                The legend gives the options in which each run differs from the others (new option names also for older runs).
+  summary.tsv   the same numbers, plus an estimate of the particles a helical extraction gives from each export (one segment every
+                --step_A along each path or piece) and their size (--box_px, --bytes). Lengths are arc lengths.
+  sheet_NN_&lt;micrograph&gt;.png   the QC overlays of one micrograph side by side, one panel per run (green = exported start-end pieces)
+Piece lengths come from the exported coordinate files, in the pixel size of the original micrographs (read from the run's input
+micrographs star file; --angpix overrides). A tracing job run with --qc calls this itself (&lt;job&gt;/qc/compare/), on that job and the
+earlier QC jobs of the project on the same micrographs.
+
+positional arguments:
+  runs
+
+options:
+  -h, --help       show this help message and exit
+  --out OUT
+  --n N            number of micrographs with side-by-side QC sheets (none for a single run)
+  --angpix ANGPIX  pixel size of the original micrographs (default: from the input star file)
+  --step_A STEP_A  segment step of the helical extraction (A) for the particle estimate: rise x number of
+                   asymmetric units
+  --box_px BOX_PX  box size of the extracted particles (after any rescaling) for the size estimate
+  --bytes BYTES    bytes per pixel of the extracted particles: 2 = float16, 4 = float32
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum compare-traces [-h] --pred PRED --pos POS [--neg NEG] --out OUT [--chains CHAINS] [--n N]
+                                 [--zoom ZOOM] [--compare {spline,fix,avoid}] [--select {even,curved}]
+                                 [--names NAMES]
+
+Before/after comparison figures with the network's mask probability overlaid.
+
+  filamentum compare-traces --pred RUN/pred --pos DATA/export_subset --neg DATA/negatives          --out RUN/traces/compare --n 15 [--compare spline|fix]
+
+Per micrograph: full view, two 4x zooms and a plot below.  Extra arguments are passed to trace.py's parser.
+  --compare spline (default): before = everything except the spline, after = full pipeline.  A = largest orientation
+      jitter before the spline, B = largest shift caused by it.  Plot: orientation jitter along the longest trace.
+  --compare fix: before = without the crossing fix, after = with it (both with the spline).  A = the orientation split with
+      the largest deviation, B = a border cut (or the next split).  Markers on the 'after' panels: magenta x = split
+      where the path left the predicted orientation, white triangle = cut at the image border, lime diamond = link made across a
+      gap by continuation, orange circle = end with an ambiguous partner, left unlinked.  Plot: distribution of the angle between path tangent and predicted orientation.
+Picks micrographs with traces evenly from the chains file (--chains) or from all predictions.
+
+options:
+  -h, --help            show this help message and exit
+  --pred PRED
+  --pos POS
+  --neg NEG
+  --out OUT
+  --chains CHAINS       chains.tsv of an earlier trace.py run (lists micrographs with traces)
+  --n N
+  --zoom ZOOM
+  --compare {spline,fix,avoid}
+  --select {even,curved}
+                        which micrographs: evenly spaced, or those with the most strongly curved traces
+                        (default for --compare avoid)
+  --names NAMES         comma-separated micrograph names (instead of choosing them); figures are numbered
+                        from --start
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum split-preview [-h] --pred PRED --pos POS [--neg NEG] --out OUT [--n N]
+                                [--target_offset_nm TARGET_OFFSET_NM] [--target_keep TARGET_KEEP]
+
+Preview and evaluate the straight-piece split used by the RELION 'straight' export of trace.py.
+
+  filamentum split-preview --pred RUN/pred --pos DATA/export_subset --neg DATA/negatives          --out RUN/split_preview [--n 10] [--straight_eps_nm 1.5 --straight_deg 6 --min_piece_nm 40]
+
+preview_NN_&lt;micrograph&gt;.png (one per micrograph):
+  top      the micrograph with the traces (cyan) and, next to it, the straight pieces that would be exported (alternating colours,
+           white dots = piece ends, grey dashed = pieces dropped for being shorter than --min_piece_nm); scale bar
+  middle   4x zoom where the split is busiest, with the length of every piece
+  right    'as extracted': the micrograph resampled along each piece's straight start-end line (what the boxes see), with the trace
+           overlaid: the 4 pieces with the largest offset and 4 typical ones, and the pieces in the zoomed region
+  bottom   piece lengths (dropped ones in grey); per kept piece the largest perpendicular distance between the trace and its straight
+           start-end line against the largest angle between that line and the local trace direction at an end, with the limits drawn;
+           and the offset of every trace point from its straight line
+sweep.png  how the number of pieces, their length and the share of traced length that is kept change with the two limits and with
+           --min_piece_nm, over the same micrographs; the chosen setting is outlined.
+planner.png / planner.tsv  the trade-off between segment length and positional/orientation accuracy: for a grid of limits, the share of
+           traced length kept, the median piece length and the OBSERVED offset of the trace from the straight start-end line (median and
+           95th percentile over all trace points of the kept pieces) and the end angle. The limit --straight_eps_nm bounds the largest
+           observed perpendicular distance anywhere along a piece (not an expectation, and not only at the ends; it is zero at the ends and
+           largest near the middle); --straight_deg is checked at the two ends.
+           With --target_offset_nm X --target_keep Y the combinations that meet both are listed (planner_solution.tsv).
+All options of trace.py are accepted (e.g. --spline_nm).  Nothing is written for RELION here; run trace.py for that.
+
+options:
+  -h, --help            show this help message and exit
+  --pred PRED
+  --pos POS
+  --neg NEG
+  --out OUT
+  --n N
+  --target_offset_nm TARGET_OFFSET_NM
+                        planner: acceptable largest offset of the trace from a piece (nm)
+  --target_keep TARGET_KEEP
+                        planner: share of traced length that must stay exported (0-1)
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum merge-lists [-h] -o O [--check] lists [lists ...]
+
+Merge RELION coordinate lists (data_general pick type + data_coordinate_files) written by shards of relion_filament_trace.py.
+
+  python scripts/merge_coordinate_lists.py External/job001/shard_*/relion_straight/startend.star -o External/job001/startend_all.star [--check]
+
+The per-micrograph coordinate files stay where they are (the lists point to them); only the list is combined. All lists must have the same pick
+type, and a micrograph may appear only once. --check also verifies that every coordinate file exists (paths relative to the current directory,
+as RELION reads them from the project directory).
+
+positional arguments:
+  lists
+
+options:
+  -h, --help  show this help message and exit
+  -o O
+  --check
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum check-env [-h] [--ckpt CKPT] [--angpix ANGPIX] [--n N] [--size SIZE]
+
+Preflight for a machine that will run the inference (e.g. a GPU cluster): are the libraries there, can torch really run on the GPU, does the checkpoint
+load, and how fast are the stages? Run it in a job on a GPU node before the long run:
+
+  filamentum check-env [--ckpt model.pt] [--angpix 0.65]     (default network: the shipped pan network)
+
+It binning-times a synthetic full-size micrograph, times the network (fp32 and fp16, batch 1 and 8) and the tracer (on a synthetic map, so it
+underestimates real, denser micrographs), and prints an estimate of micrographs/s and the time for N micrographs (--n, default 20000).
+
+options:
+  -h, --help       show this help message and exit
+  --ckpt CKPT
+  --angpix ANGPIX
+  --n N
+  --size SIZE      full-size micrograph used for the timing (HxW)
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: filamentum predict [-h] --ckpt CKPT [--pos POS] [--neg NEG] [--out OUT] [--names NAMES] [--max MAX]
+                          [--exclude EXCLUDE]
+
+options:
+  -h, --help         show this help message and exit
+  --ckpt CKPT
+  --pos POS
+  --neg NEG
+  --out OUT
+  --names NAMES
+  --max MAX
+  --exclude EXCLUDE  comma-separated parts of micrograph names to leave out
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="statistics.html" class="btn btn-neutral float-left" title="Micrograph statistics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="relion_jobs.html" class="btn btn-neutral float-right" title="RELION External jobs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

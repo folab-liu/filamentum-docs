@@ -1,0 +1,33 @@
+filamentum
+==========
+
+filamentum traces curved and crossing filaments in cryo-EM micrographs and writes RELION coordinates.
+
+A small U-Net (0.24 M parameters) predicts two things for every pixel of a micrograph Fourier-cropped to 5.2 Å/px: the probability
+that the pixel lies on a filament, and the direction of the filament axis. A tracer turns these maps into smooth curves that continue
+through crossings. It exports them as straight start-end pieces, which any RELION version reads, and as polylines for RELION 5.1's
+curved extraction.
+
+The network is meant to be fine-tuned for each specimen on a few manually picked micrographs. The shipped starting network, the *pan
+network*, was trained on Aβ42 and ten other filament data sets, and fine-tuning it takes about a minute on a GPU. Training,
+tracing and micrograph selection all run as RELION ``External`` jobs, so picks, networks and coordinates stay in the RELION pipeline.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Using filamentum
+
+   install
+   tutorial
+   statistics
+   options
+   relion_jobs
+   troubleshooting
+
+.. toctree::
+   :maxdepth: 1
+   :caption: More
+
+   agents
+   changelog
+
+License: GPL-3.0-or-later. A manuscript describing the method is in preparation; please cite it when it is available.

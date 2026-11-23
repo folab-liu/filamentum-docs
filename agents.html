@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using filamentum with an AI agent &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Troubleshooting and questions" href="troubleshooting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using filamentum with an AI agent</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-filamentum-with-an-ai-agent">
+<h1>Using filamentum with an AI agent<a class="headerlink" href="#using-filamentum-with-an-ai-agent" title="Link to this heading"></a></h1>
+<p>An AI coding agent such as Claude Code can run filamentum’s jobs in a RELION project: add the External jobs with
+<code class="docutils literal notranslate"><span class="pre">relion_pipeliner</span></code>, read the statistics and propose selection limits. filamentum ships a guide for such agents. Write it into
+the RELION project folder, where Claude Code reads <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> at the start of a session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">relion</span><span class="o">/</span><span class="n">project</span>
+<span class="n">filamentum</span> <span class="n">agent</span><span class="o">-</span><span class="n">guide</span> <span class="o">--</span><span class="n">o</span> <span class="n">CLAUDE</span><span class="o">.</span><span class="n">md</span>            <span class="c1"># or --append to add it to an existing CLAUDE.md</span>
+</pre></div>
+</div>
+<p>The guide sets ground rules (work through the pipeline, back up <code class="docutils literal notranslate"><span class="pre">default_pipeline.star</span></code>, ask before using GPUs or deleting
+anything, report numbers from the job files), lists the jobs and their options, gives the <code class="docutils literal notranslate"><span class="pre">relion_pipeliner</span></code> commands, and
+explains how to read the outputs and choose selection limits. Edit the copy for your site, e.g. with queue names and
+submission templates.</p>
+<p>The guide:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># filamentum in this RELION project: guide for AI agents</span>
+
+filamentum traces filaments in cryo-EM micrographs and writes RELION coordinates. It runs as RELION <span class="sb">`External`</span> jobs. This file
+tells an agent (e.g. Claude Code) working in this RELION project how to use it. Written by <span class="sb">`filamentum agent-guide`</span>; the options of
+each command are in <span class="sb">`filamentum COMMAND --help`</span>, and the full documentation is at https://folab-liu.github.io/filamentum-docs/.
+
+<span class="gu">## Ground rules</span>
+
+<span class="k">-</span><span class="w"> </span>Work through the RELION pipeline: add jobs with <span class="sb">`relion_pipeliner`</span> (or ask the user to use the GUI), so every result is a job with
+  inputs, outputs and a record. Do not write into another job's folder, and do not edit <span class="sb">`default_pipeline.star`</span> by hand.
+<span class="k">-</span><span class="w"> </span>Back up <span class="sb">`default_pipeline.star`</span> before adding jobs, and do not add jobs while another process (the GUI, a running pipeliner) is
+  adding jobs to the same project.
+<span class="k">-</span><span class="w"> </span>A job may only take inputs from jobs that already exist. Give each job a short alias that says what it is (e.g. <span class="sb">`TrainPili`</span>,
+  <span class="sb">`TraceAll`</span>, <span class="sb">`SelLen1`</span>).
+<span class="k">-</span><span class="w"> </span>Changed particle or coordinate STAR files go into the pipeline as External jobs (with RELION_OUTPUT_NODES.star), never through
+  Import.
+<span class="k">-</span><span class="w"> </span>Ask before using GPU or long-running resources, and before deleting or overwriting anything. Do not cancel running jobs you did
+  not start.
+<span class="k">-</span><span class="w"> </span>Report numbers from the files (run.out, progress.tsv, micrograph_stats.txt, val_scores.tsv), not from memory, and say which job
+  they came from.
+
+<span class="gu">## The jobs</span>
+
+All are External jobs. RELION calls `&lt;executable&gt; --o External/jobNNN/ [--in_mics F] [--in_coords F] [--in_parts F]
+[--&lt;param label&gt; &lt;value&gt; ...] --j &lt;threads&gt; &lt;other arguments&gt;`. Each writes RELION_JOB_EXIT_SUCCESS/FAILURE/ABORTED and
+RELION_OUTPUT_NODES.star; <span class="sb">`run.out`</span> ends with a <span class="sb">`finished:`</span> line.
+
+| step | executable | inputs | params / other arguments | main outputs |
+|---|---|---|---|---|
+| fine-tune | <span class="sb">`filamentum-train-relion`</span> | <span class="sb">`in_coords`</span> = <span class="sb">`ManualPick/jobNNN/manualpick.star`</span> (start-end picks) | <span class="sb">`--init pan`</span> (default) / <span class="sb">`none`</span> / a model.pt; <span class="sb">`--iters 3000`</span> | <span class="sb">`model.pt`</span>, <span class="sb">`val_scores.tsv`</span> |
+| trace | <span class="sb">`filamentum-trace-relion`</span> | <span class="sb">`in_mic`</span> = micrographs STAR with optics table | param <span class="sb">`ckpt`</span> = model.pt (default: shipped pan network); <span class="sb">`--max N --qc N`</span> for a test | <span class="sb">`relion_lines/lines.star`</span>, <span class="sb">`relion_straight/startend.star`</span>, <span class="sb">`progress.tsv`</span>, <span class="sb">`logfile.pdf`</span> |
+| select | <span class="sb">`filamentum-select-relion`</span> | <span class="sb">`in_mic`</span> = micrographs to select from (optional) | params <span class="sb">`tracer_job`</span>, <span class="sb">`min`</span>, <span class="sb">`max`</span> (<span class="sb">`stat=value[,stat=value]`</span>), <span class="sb">`coords`</span> (<span class="sb">`no`</span> to skip lists) | <span class="sb">`micrographs.star`</span>, <span class="sb">`micrograph_stats.tsv`</span>, coordinate lists of kept micrographs |
+| annotate | <span class="sb">`filamentum-annotate-relion`</span> | <span class="sb">`in_part`</span> = particles | param <span class="sb">`tracer_job`</span> (traced with <span class="sb">`--save_maps`</span>) | <span class="sb">`particles.star`</span> with <span class="sb">`rlnFtr*`</span> columns |
+
+Adding and running a job from the project folder (RELION environment loaded):
+
+<span class="sb">```</span>
+<span class="sb">relion_pipeliner --addJob External --setJobAlias TraceTest --addJobOptions "fn_exe == filamentum-trace-relion;in_mic == CtfFind/job003/micrographs_ctf.star;param1_label == ckpt;param1_value == External/job006/model.pt;nr_threads == 16;other_args == --max 50 --qc 10;"</span>
+<span class="sb">relion_pipeliner --RunJobs "External/job007/"</span>
+<span class="sb">```</span>
+
+Job option names are those of an External job's job.star: <span class="sb">`fn_exe`</span>, <span class="sb">`in_mic`</span>, <span class="sb">`in_coords`</span>, <span class="sb">`in_part`</span>, <span class="sb">`param1_label`</span> ...
+<span class="sb">`param10_value`</span>, <span class="sb">`nr_threads`</span>, <span class="sb">`other_args`</span>, and for a queue <span class="sb">`do_queue == Yes;qsubscript == &lt;template&gt;;qsub == sbatch;`</span>. Never
+give an option with an empty value; leave it out. Check the new job number in <span class="sb">`default_pipeline.star`</span> before running it.
+
+<span class="gu">## Recommended sequence</span>
+
+<span class="k">1.</span> The user picks 3-10 micrographs in Manual picking (start-end mode), annotating every filament on each picked micrograph.
+<span class="k">2.</span> Fine-tune on a GPU. Read <span class="sb">`val_scores.tsv`</span> and the <span class="sb">`kept step`</span> line of run.out; step 0 means the starting network was kept.
+<span class="k">3.</span> Trace a sample: <span class="sb">`--max 100 --qc 20`</span>. Show the user <span class="sb">`qc/*.png`</span> and <span class="sb">`logfile.pdf`</span>; compare settings with further QC jobs on
+   the same micrographs (<span class="sb">`qc/compare/`</span>).
+<span class="k">4.</span> Trace everything (same job without <span class="sb">`--max`</span>). Many CPU cores help most: tracing, not the GPU, sets the speed.
+<span class="k">5.</span> Select micrographs from the statistics, then let the user check the selection: in the select job's outputs, the coordinate
+   list opens the kept micrographs in RELION's manual picker (Display).
+<span class="k">6.</span> Extract with the select job's <span class="sb">`micrographs.star`</span> and a coordinate list (<span class="sb">`relion_lines/lines.star`</span> for RELION 5.1 curved
+   extraction, <span class="sb">`relion_straight/startend.star`</span> otherwise).
+
+<span class="gu">## Reading the outputs</span>
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`progress.tsv`</span>: one row per traced micrograph: <span class="sb">`n_traces`</span>, <span class="sb">`length_um`</span>, <span class="sb">`straight_pieces`</span>, <span class="sb">`straight_kept_um`</span>,
+  <span class="sb">`straight_dropped_um`</span>, <span class="sb">`median_trace_nm`</span>, <span class="sb">`max_trace_nm`</span>, <span class="sb">`n_crossings`</span>, <span class="sb">`length_per_um2`</span>, <span class="sb">`crossings_per_um`</span>.
+<span class="k">-</span><span class="w"> </span><span class="sb">`micrograph_stats.txt`</span>: percentiles of each statistic; <span class="sb">`logfile.pdf`</span>: histograms and scatter plots with Spearman correlations.
+<span class="k">-</span><span class="w"> </span><span class="sb">`failed.txt`</span>: micrographs that could not be read or traced. <span class="sb">`filament_trace_params.txt`</span>: every option, the code version and the
+  network checksum (cite these when reporting a run).
+<span class="k">-</span><span class="w"> </span><span class="sb">`select`</span> job: <span class="sb">`micrograph_stats.tsv`</span> has a <span class="sb">`selected`</span> column and <span class="sb">`left_out_because`</span> for every micrograph.
+
+<span class="gu">## Choosing selection limits</span>
+
+<span class="k">-</span><span class="w"> </span>Base limits on the tracing job's distributions, and state what fraction of micrographs a limit keeps before proposing it.
+<span class="k">-</span><span class="w"> </span><span class="sb">`n_traces`</span> and <span class="sb">`length_um`</span> are nearly the same information. Traced length and crowding go together with crossings per um, so a
+  lower limit on <span class="sb">`length_um`</span> keeps crowded micrographs unless paired with an upper limit on <span class="sb">`crossings_per_um`</span>.
+<span class="k">-</span><span class="w"> </span><span class="sb">`min n_traces=1`</span> drops micrographs with nothing traced. The statistics only see exported traces: traces shorter than
+  <span class="sb">`--min_trace_nm`</span> (25 nm) are not counted, so such micrographs look empty.
+
+<span class="gu">## Units and options</span>
+
+Lengths in nm (<span class="sb">`*_nm`</span>), areas in nm2, angles in degrees (<span class="sb">`*_deg`</span>); pixel size, box and particle sizes in A as in RELION. Common
+tracing options: <span class="sb">`--border_nm`</span> (10), <span class="sb">`--min_trace_nm`</span> (25), <span class="sb">`--avoid_crossings_nm R`</span> (off), <span class="sb">`--thresh`</span> (0.5), <span class="sb">`--spline_nm`</span> (30),
+<span class="sb">`--sample_step_nm`</span> (5), <span class="sb">`--min_piece_nm`</span> (40, straight export only), <span class="sb">`--no-span`</span> (skeleton tracer). <span class="sb">`--resume`</span> continues an
+interrupted run in the same folder.
+
+<span class="gu">## Pitfalls</span>
+
+<span class="k">-</span><span class="w"> </span>The number RELION's manual picker shows for a lines list is the number of control points, not the length or the number of traces.
+<span class="k">-</span><span class="w"> </span>The progress line can show 0 traced for minutes: tracing processes finish in waves. Do not conclude the job is stuck before
+  several minutes without a new line.
+<span class="k">-</span><span class="w"> </span>Do not compare traced lengths between runs with different <span class="sb">`--border_nm`</span>, <span class="sb">`--min_trace_nm`</span> or <span class="sb">`--avoid_crossings_nm`</span> without
+  saying so.
+<span class="k">-</span><span class="w"> </span>With very few picks, fine-tuning often keeps the starting network (step 0); that is the intended safeguard, not a failure.
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="troubleshooting.html" class="btn btn-neutral float-left" title="Troubleshooting and questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+Options
+=======
+
+Units
+-----
+
+Every command uses the same units. Lengths on the micrograph are in nm (options ending in ``_nm``), areas in nm² (``_nm2``), angles in
+degrees (``_deg``), and mask probabilities run from 0 to 1. Quantities that RELION also uses (pixel size, resolution, particle and
+box size, helical rise) are in Å, as in RELION. Older option names in pixels or Å are still accepted and are converted at the run's
+pixel size. Every tracing job writes all options and their values, the code version and the checksum of the network to
+``filament_trace_params.txt`` in its job folder.
+
+Common tracing options
+----------------------
+
+Give these in the tracing job's *Additional arguments*.
+
+=======================================================  =====================================================================
+to ...                                                   option (default)
+=======================================================  =====================================================================
+keep traces away from the micrograph edge                ``--border_nm`` (10); ``--no-border_trim``: span traces run to the edge
+drop short traces (both exports)                         ``--min_trace_nm`` (25)
+avoid segments across crossings                          ``--avoid_crossings_nm R``: cut traces at crossings and keep every end
+                                                         R nm from other traces (off)
+trace fainter filaments                                  ``--thresh`` (0.5)
+make traces stiffer or more flexible                     ``--spline_nm`` (30), knot spacing of the smoothing spline
+set the point spacing of the lines export                ``--sample_step_nm`` (5)
+keep more of curved filaments in the straight export     ``--min_piece_nm`` (40), ``--straight_eps_nm`` (1.5), ``--straight_deg`` (6)
+choose the export                                        ``--export straight|lines|both`` (both)
+write RELION 4.0 coordinates                             ``--relion4`` (straight export only)
+use the skeleton tracer instead of the span tracer       ``--no-span``
+reproduce traces made with the old defaults              see ``LEGACY_DEFAULTS`` in ``filamentum/trace.py``
+=======================================================  =====================================================================
+
+Large runs: ``--j`` tracing processes, ``--fp16`` for half-precision inference, ``--resume`` after an interruption (micrographs in
+``progress.tsv`` are skipped), and ``--shard I/N`` to split a run over several jobs (merge their lists with
+``filamentum merge-lists``). A micrograph that cannot be read is logged in ``failed.txt`` and skipped; the run fails only if more
+than 2% fail (``--max_failed_frac``).
+
+All options
+-----------
+
+The ``--help`` text of each command. The tracing job (``trace-relion``) also accepts every option of ``trace-maps``.
+
+trace-relion
+^^^^^^^^^^^^
+
+.. literalinclude:: cli/trace-relion.txt
+   :language: none
+
+trace-maps (tracing options)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: cli/trace-maps.txt
+   :language: none
+
+train
+^^^^^
+
+.. literalinclude:: cli/train.txt
+   :language: none
+
+select
+^^^^^^
+
+.. literalinclude:: cli/select.txt
+   :language: none
+
+annotate-relion
+^^^^^^^^^^^^^^^
+
+.. literalinclude:: cli/annotate-relion.txt
+   :language: none
+
+Other commands
+^^^^^^^^^^^^^^
+
+``predict``, ``compare-runs``, ``compare-traces``, ``split-preview``, ``merge-lists`` and ``check-env``:
+
+.. literalinclude:: cli/compare-runs.txt
+   :language: none
+
+.. literalinclude:: cli/compare-traces.txt
+   :language: none
+
+.. literalinclude:: cli/split-preview.txt
+   :language: none
+
+.. literalinclude:: cli/merge-lists.txt
+   :language: none
+
+.. literalinclude:: cli/check-env.txt
+   :language: none
+
+.. literalinclude:: cli/predict.txt
+   :language: none

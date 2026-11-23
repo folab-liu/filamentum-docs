@@ -1,0 +1,43 @@
+Troubleshooting and questions
+=============================
+
+The progress line in ``run.out`` stays at 0 traced for a while
+   Tracing finishes in waves: all tracing processes start a micrograph at the same time, and each takes from seconds to minutes,
+   longer the more crowded the micrograph. Nothing finishes for a while, then a batch at once. The progress line is printed at
+   least every minute; its rate is measured over the last 5 minutes, from the first finished micrograph on.
+
+Tracing is slow
+   Give the job more CPU cores and set *Number of threads* (``--j``) to the cores minus 4 for the reading processes; the job warns
+   when it has fewer CPUs than processes. The GPU is rarely the limit. ``filamentum check-env`` times the steps on the machine.
+
+The GUI number in the manual picker is not the trace length
+   For a lines list, RELION's manual picker shows the number of coordinate rows, i.e. control points along the traces, not their
+   length or the number of traces. ``n_traces`` and ``length_um`` are in ``progress.tsv`` and in the QC titles.
+
+Micrographs have no traces although filaments are visible
+   Check the QC overlay. If short traces were dropped, lower ``--min_trace_nm``; if the network misses the filaments, pick a few of
+   those micrographs and fine-tune again. Micrographs with every trace shorter than ``--min_trace_nm`` look empty in the statistics.
+
+Traces stop short of the micrograph edge
+   By design: ``--border_nm`` (10 nm) keeps traces off the edge, where extraction boxes would be cut off. ``--border_nm 2`` traces
+   almost to the edge.
+
+Segments sit on crossings
+   ``--avoid_crossings_nm R`` (e.g. 10) cuts traces at crossings and keeps every end at least R nm from other traces (at most 2R
+   is removed from an end); compare the before/after close-ups in ``qc/avoid/`` of a QC run. It costs traced length on crowded
+   micrographs.
+
+The network was trained on data from another processing package
+   A network records its preprocessing (target pixel size, ``--background_nm``) in its metadata, and tracing uses it. For
+   micrographs from RELION's motion correction traced with a network trained on cryoSPARC micrographs, give ``--background_nm 10``.
+
+``Permission denied`` when RELION starts the job
+   The executable is not executable or not found. Use the installed ``filamentum-*-relion`` executables (on ``PATH`` or with their
+   full path); in a git checkout the ``scripts/relion_external*.sh`` wrappers must have their executable bit set.
+
+A run was interrupted
+   Run the tracing job again in the same job folder with ``--resume`` added to its options; micrographs already in
+   ``progress.tsv`` are skipped.
+
+Coordinates for RELION 4.0
+   ``--relion4`` writes the straight export with RELION 4's node type; extract with *Coordinates are start-end only?* = Yes.

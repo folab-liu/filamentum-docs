@@ -1,0 +1,87 @@
+RELION External jobs
+====================
+
+RELION runs an External job as::
+
+    <executable> --o External/jobNNN/ [--in_mics F] [--in_coords F] [--in_parts F] [--<Param label> <Param value> ...] --j <threads> <Additional arguments>
+
+Every filamentum job writes ``RELION_JOB_EXIT_SUCCESS`` (or ``_FAILURE``) and ``RELION_OUTPUT_NODES.star`` in the job folder, so
+RELION shows its status and its outputs as nodes for later jobs. ``run.out`` ends with a ``finished:`` line. A job aborted from the
+GUI stops at its next check (training every 100 steps, tracing between micrographs) and writes ``RELION_JOB_EXIT_ABORTED``.
+
+Training: ``filamentum-train-relion``
+-------------------------------------
+
+=====================  =========================================================================================
+Input coordinates      ``ManualPick/jobNNN/manualpick.star`` (start-end picks)
+Input micrographs      optional; default ``micrographs_selected.star`` of the ManualPick job (for the pixel size)
+Threads                processes that trace the validation micrographs (4)
+Additional arguments   ``--init pan|abeta42|none|<model.pt>``, ``--iters`` (3000), ``--val_every`` (250),
+                       ``--val_frac`` (0.15), ``--empty <micrographs STAR>``, ``--seed`` (0)
+Outputs                ``model.pt`` (node ``ParamsData.pt.filamentum.model``), ``val_scores.tsv`` (validation length
+                       precision, recall and F1 per checkpoint), ``train_stats.json``
+=====================  =========================================================================================
+
+On a GPU the training micrographs are held on the GPU and training uses fp16 mixed precision; on a CPU it runs in fp32 and is
+about 20 times slower.
+
+Tracing: ``filamentum-trace-relion``
+------------------------------------
+
+=====================  =========================================================================================
+Input micrographs      a micrographs STAR file with an optics table (e.g. ``CtfFind/jobNNN/micrographs_ctf.star``)
+Param ``ckpt``         the network, e.g. ``External/jobNNN/model.pt`` (default: the shipped pan network)
+Threads                tracing processes (``--j``); 4 more processes read micrographs
+Additional arguments   any tracing option (:doc:`options`), ``--max N``, ``--qc N``, ``--resume``, ``--save_maps``
+Outputs                ``relion_lines/lines.star`` (node ``MicrographCoordsGroup.star.relion.autopick``, RELION 5.1 lines),
+                       ``relion_straight/startend.star`` (``MicrographCoordsGroup.star.relion.manualpick.helixstartend``),
+                       ``logfile.pdf`` (``LogFile.pdf.relion.filamentum``), ``progress.tsv``, ``micrograph_stats.txt``,
+                       ``failed.txt``, ``filament_trace_params.txt``, ``qc/`` (with ``--qc``), ``maps/`` (with ``--save_maps``)
+=====================  =========================================================================================
+
+Micrographs are read and Fourier-cropped to 5.2 Å/px, run through the network in batches on the GPU, traced by the pool of
+tracing processes, and written in the pixel coordinates of the original micrographs.
+
+Selection: ``filamentum-select-relion``
+---------------------------------------
+
+=====================  =========================================================================================
+Input micrographs      the micrographs to select from (default: the tracing job's input)
+Param ``tracer_job``   the tracing job folder (several, comma-separated, e.g. shards)
+Param ``min``          lower limits, ``stat=value[,stat=value]``
+Param ``max``          upper limits, likewise
+Param ``coords``       ``no`` to leave out the coordinate lists of the kept micrographs (default yes)
+Outputs                ``micrographs.star`` (node ``MicrographGroupMetadata.star.relion``), ``logfile.pdf``,
+                       ``micrograph_stats.tsv``, ``micrograph_stats.txt``, ``select_summary.png``, and the coordinate lists
+                       ``relion_lines/lines.star`` and ``relion_straight/startend.star`` of the kept micrographs
+=====================  =========================================================================================
+
+The statistics are described in :doc:`statistics`. The values are shell-safe on purpose (no spaces, ``<`` or ``>``), because
+RELION passes them on a command line.
+
+Crossing metadata: ``filamentum-annotate-relion``
+-------------------------------------------------
+
+=====================  =========================================================================================
+Input particles        extracted (or later) particles, e.g. ``Extract/jobNNN/particles.star``
+Param ``tracer_job``   the tracing job, which must have been run with ``--save_maps``
+Outputs                ``particles.star`` with columns ``rlnFtr*`` per particle: distance to the nearest other trace, the
+                       length of other traces parallel and perpendicular to the particle within its CTF delocalisation
+                       radius, and more (``filamentum annotate-relion --help``)
+=====================  =========================================================================================
+
+RELION carries these columns through classification and refinement. Only ``rlnParticleSelectZScore`` can be selected on inside
+RELION; ``--zscore LparA`` copies one metric into it.
+
+Adding the jobs from a script
+-----------------------------
+
+``relion_pipeliner`` adds and runs the same jobs without the GUI (run in the project folder, with RELION's environment loaded)::
+
+    relion_pipeliner --addJob External --setJobAlias TraceAll --addJobOptions \
+      "fn_exe == filamentum-trace-relion;in_mic == CtfFind/job003/micrographs_ctf.star;param1_label == ckpt;param1_value == External/job006/model.pt;nr_threads == 16;other_args == --qc 20;"
+    relion_pipeliner --RunJobs "External/job007/"
+
+The job options are those of the External job's ``job.star``: ``fn_exe``, ``in_mic``, ``in_coords``, ``in_part``, ``param1_label``
+... ``param10_value``, ``nr_threads``, ``other_args``, and the queue options ``do_queue``, ``qsubscript``, ``qsub``. Leave an
+option out rather than giving it an empty value.

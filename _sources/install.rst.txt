@@ -1,0 +1,50 @@
+Installation
+============
+
+filamentum needs Python 3.10 or newer and PyTorch. Install the PyTorch build that matches your GPU and CUDA driver first if the default
+wheel does not suit it (see https://pytorch.org), then::
+
+    pip install filamentum
+
+This installs:
+
+* the command ``filamentum``, with one subcommand per tool (``filamentum`` alone lists them; ``filamentum COMMAND --help`` shows the
+  options of each);
+* one executable per RELION ``External`` job, because RELION's External job runs a single executable:
+
+  ======================================  ==============================================================
+  ``filamentum-train-relion``             fine-tune the network on the picks of a ``ManualPick`` job
+  ``filamentum-trace-relion``             trace micrographs and write coordinate lists
+  ``filamentum-select-relion``            keep micrographs by their tracing statistics
+  ``filamentum-annotate-relion``          add crossing metadata to particles
+  ======================================  ==============================================================
+
+* the pan network (``filamentum/models/pan.pt``, 0.5 MB), used when no other network is given.
+
+RELION needs the executables on its ``PATH``, or the full path in the External job's *External executable* field. With a conda
+environment, either activate it before starting RELION or give the full path, e.g. ``/path/to/env/bin/filamentum-trace-relion``.
+
+Check the GPU
+-------------
+
+Inside a GPU job (not on a login node)::
+
+    filamentum check-env
+
+This reports whether torch can use the GPU and times reading, the network and tracing on test data. It also accepts a trained network:
+``filamentum check-env --ckpt External/job012/model.pt``.
+
+Where the time goes
+-------------------
+
+Tracing, not the network, sets the speed. The network handles a batch of micrographs in well under a second on a GPU, while each
+tracing process takes from a few seconds to a few minutes per micrograph, more on crowded ones. Give a tracing job as many CPU
+cores as you can (*Number of threads*, ``--j``). Four further processes read micrographs. The job warns when readers plus tracers
+exceed the CPUs it was given.
+
+From a git checkout
+-------------------
+
+The repository's ``scripts/relion_external*.sh`` wrappers do the same as the installed executables without installing the package.
+They run the checkout's code with the Python of a conda environment named ``filament`` or ``filament-infer``, or the one in
+``FILAMENT_PYTHON``.

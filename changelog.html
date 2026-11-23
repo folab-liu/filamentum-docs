@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Using filamentum with an AI agent" href="agents.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#november-2026">0.1.0 (23 November 2026)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#not-yet-released">0.1.1 (not yet released)</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h1>
+<section id="november-2026">
+<h2>0.1.0 (23 November 2026)<a class="headerlink" href="#november-2026" title="Link to this heading"></a></h2>
+<p>First release.</p>
+<ul class="simple">
+<li><p>Training, tracing, micrograph selection and crossing annotation as RELION External jobs.</p></li>
+<li><p>Span tracer (default) and skeleton tracer; crossing avoidance (<code class="docutils literal notranslate"><span class="pre">--avoid_crossings_nm</span></code>) in both.</p></li>
+<li><p>One unit convention for all options (nm, nm², degrees; Å for RELION quantities); older option names accepted.</p></li>
+<li><p>Per-micrograph statistics, <code class="docutils literal notranslate"><span class="pre">logfile.pdf</span></code> with their distributions and correlations, QC overlays and comparison plots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">select</span></code> with coordinate lists of the kept micrographs for the manual picker.</p></li>
+<li><p>The pan network shipped as the default network and starting point for fine-tuning.</p></li>
+<li><p>Traces kept 10 nm from the micrograph edge by default (<code class="docutils literal notranslate"><span class="pre">--border_nm</span></code>).</p></li>
+</ul>
+</section>
+<section id="not-yet-released">
+<h2>0.1.1 (not yet released)<a class="headerlink" href="#not-yet-released" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The span tracer (default) now cuts its traces at <code class="docutils literal notranslate"><span class="pre">--border_nm</span></code> (10 nm), as the skeleton tracer does. In 0.1.0 it only kept its
+start points off the border and its traces still ran to within about a pixel of the micrograph edge, so the 10 nm default had
+almost no effect. <code class="docutils literal notranslate"><span class="pre">--no-border_trim</span></code> restores the 0.1.0 behaviour; traces made before 0.1.0 used <code class="docutils literal notranslate"><span class="pre">--border_nm</span> <span class="pre">2.08</span></code>.</p></li>
+<li><p>Small blobs of the thresholded mask are removed with scipy, keeping blobs of at least <code class="docutils literal notranslate"><span class="pre">--min_blob_nm2</span></code> (8 px at the default).
+scikit-image 0.26 changed <code class="docutils literal notranslate"><span class="pre">remove_small_objects</span></code>, which 0.1.0 used, so that it also removed blobs of exactly that size;
+skeleton traces made with 0.1.0 can therefore differ slightly between scikit-image 0.25 and 0.26. 0.1.1 gives the 0.25 result
+with either version.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">check-env</span></code> loads the shipped or given network with its own architecture (0.1.0 assumed the original full-width
+network and failed to load <code class="docutils literal notranslate"><span class="pre">pan.pt</span></code> and trained networks).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">agent-guide</span></code> writes a guide for AI agents working in a RELION project.</p></li>
+<li><p>Documentation (this site).</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agents.html" class="btn btn-neutral float-left" title="Using filamentum with an AI agent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

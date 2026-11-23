@@ -1,0 +1,51 @@
+Micrograph statistics
+=====================
+
+Every tracing job records one row per micrograph in ``progress.tsv``. ``filamentum select`` filters on these columns, and both jobs
+summarise them in ``logfile.pdf`` and ``micrograph_stats.txt``. Lengths are arc lengths along the traces.
+
+=======================  ===========================================================================================
+``n_traces``             traces on the micrograph, i.e. paths in the lines export
+``length_um``            their total length (µm)
+``median_trace_nm``      median trace length (nm); 0 if there are no traces
+``max_trace_nm``         longest trace (nm)
+``n_crossings``          places where two different traces cross
+``crossings_per_um``     ``n_crossings`` per µm of traced length
+``length_per_um2``       traced length per µm² of micrograph: how crowded the micrograph is
+``straight_pieces``      straight export: start-end pieces kept
+``straight_kept_um``     straight export: length of the kept pieces (µm)
+``straight_dropped_um``  straight export: length in pieces shorter than ``--min_piece_nm`` (µm)
+=======================  ===========================================================================================
+
+What the statistics do and do not see
+-------------------------------------
+
+The statistics describe the exported traces only, after every tracing option has acted. Traces removed by ``--min_trace_nm``
+(25 nm by default), parts within ``--border_nm`` of the edge, and parts cut by ``--avoid_crossings_nm`` are not counted. A
+micrograph on which every trace was shorter than ``--min_trace_nm`` therefore has ``n_traces`` = 0, like an empty one. To tell
+the two apart, trace again with a lower ``--min_trace_nm``.
+
+``--min_trace_nm`` is not only a final filter in the default span tracer: it also decides which fitted stretches are kept and
+explained away while tracing, so a run with a different value can differ by more than the short traces.
+
+Choosing limits
+---------------
+
+* Look at the tracing job's ``logfile.pdf`` first. The table gives percentiles, and the histograms show whether there is a separate
+  group (e.g. a peak at zero for empty micrographs) or a long tail.
+* Statistics that move together carry the same information. On the example data ``n_traces`` and ``length_um`` have a Spearman
+  correlation of 1.00, so a limit on either is enough. Crowding (``length_per_um2``) and ``crossings_per_um`` rise together, so a
+  lower limit on length favours crowded micrographs unless it comes with an upper limit on ``crossings_per_um``.
+* Check the result: the selection job's log file shows the kept micrographs in colour, and its coordinate lists open the kept
+  micrographs in the manual picker.
+
+Typical selections:
+
+=========================================  =========================================================
+drop micrographs with nothing traced       ``min`` = ``n_traces=1``
+enough filament to be worth extracting     ``min`` = ``length_um=1``
+avoid crowded micrographs                  ``max`` = ``crossings_per_um=2`` or ``length_per_um2=10``
+long filaments (e.g. for long-range work)  ``min`` = ``max_trace_nm=300``
+=========================================  =========================================================
+
+Tracing jobs made before 23 November 2026 recorded only ``n_traces``, ``length_um`` and the straight export.

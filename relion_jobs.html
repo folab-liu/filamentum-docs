@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RELION External jobs &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Troubleshooting and questions" href="troubleshooting.html" />
+    <link rel="prev" title="Options" href="options.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RELION External jobs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#training-filamentum-train-relion">Training: <code class="docutils literal notranslate"><span class="pre">filamentum-train-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tracing-filamentum-trace-relion">Tracing: <code class="docutils literal notranslate"><span class="pre">filamentum-trace-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selection-filamentum-select-relion">Selection: <code class="docutils literal notranslate"><span class="pre">filamentum-select-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crossing-metadata-filamentum-annotate-relion">Crossing metadata: <code class="docutils literal notranslate"><span class="pre">filamentum-annotate-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-the-jobs-from-a-script">Adding the jobs from a script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">RELION External jobs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/relion_jobs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="relion-external-jobs">
+<h1>RELION External jobs<a class="headerlink" href="#relion-external-jobs" title="Link to this heading"></a></h1>
+<p>RELION runs an External job as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">executable</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">o</span> <span class="n">External</span><span class="o">/</span><span class="n">jobNNN</span><span class="o">/</span> <span class="p">[</span><span class="o">--</span><span class="n">in_mics</span> <span class="n">F</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">in_coords</span> <span class="n">F</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">in_parts</span> <span class="n">F</span><span class="p">]</span> <span class="p">[</span><span class="o">--&lt;</span><span class="n">Param</span> <span class="n">label</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">Param</span> <span class="n">value</span><span class="o">&gt;</span> <span class="o">...</span><span class="p">]</span> <span class="o">--</span><span class="n">j</span> <span class="o">&lt;</span><span class="n">threads</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">Additional</span> <span class="n">arguments</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Every filamentum job writes <code class="docutils literal notranslate"><span class="pre">RELION_JOB_EXIT_SUCCESS</span></code> (or <code class="docutils literal notranslate"><span class="pre">_FAILURE</span></code>) and <code class="docutils literal notranslate"><span class="pre">RELION_OUTPUT_NODES.star</span></code> in the job folder, so
+RELION shows its status and its outputs as nodes for later jobs. <code class="docutils literal notranslate"><span class="pre">run.out</span></code> ends with a <code class="docutils literal notranslate"><span class="pre">finished:</span></code> line. A job aborted from the
+GUI stops at its next check (training every 100 steps, tracing between micrographs) and writes <code class="docutils literal notranslate"><span class="pre">RELION_JOB_EXIT_ABORTED</span></code>.</p>
+<section id="training-filamentum-train-relion">
+<h2>Training: <code class="docutils literal notranslate"><span class="pre">filamentum-train-relion</span></code><a class="headerlink" href="#training-filamentum-train-relion" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Input coordinates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ManualPick/jobNNN/manualpick.star</span></code> (start-end picks)</p></td>
+</tr>
+<tr class="row-even"><td><p>Input micrographs</p></td>
+<td><p>optional; default <code class="docutils literal notranslate"><span class="pre">micrographs_selected.star</span></code> of the ManualPick job (for the pixel size)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Threads</p></td>
+<td><p>processes that trace the validation micrographs (4)</p></td>
+</tr>
+<tr class="row-even"><td><p>Additional arguments</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--init</span> <span class="pre">pan|abeta42|none|&lt;model.pt&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">--iters</span></code> (3000), <code class="docutils literal notranslate"><span class="pre">--val_every</span></code> (250),
+<code class="docutils literal notranslate"><span class="pre">--val_frac</span></code> (0.15), <code class="docutils literal notranslate"><span class="pre">--empty</span> <span class="pre">&lt;micrographs</span> <span class="pre">STAR&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">--seed</span></code> (0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Outputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model.pt</span></code> (node <code class="docutils literal notranslate"><span class="pre">ParamsData.pt.filamentum.model</span></code>), <code class="docutils literal notranslate"><span class="pre">val_scores.tsv</span></code> (validation length
+precision, recall and F1 per checkpoint), <code class="docutils literal notranslate"><span class="pre">train_stats.json</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>On a GPU the training micrographs are held on the GPU and training uses fp16 mixed precision; on a CPU it runs in fp32 and is
+about 20 times slower.</p>
+</section>
+<section id="tracing-filamentum-trace-relion">
+<h2>Tracing: <code class="docutils literal notranslate"><span class="pre">filamentum-trace-relion</span></code><a class="headerlink" href="#tracing-filamentum-trace-relion" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Input micrographs</p></td>
+<td><p>a micrographs STAR file with an optics table (e.g. <code class="docutils literal notranslate"><span class="pre">CtfFind/jobNNN/micrographs_ctf.star</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Param <code class="docutils literal notranslate"><span class="pre">ckpt</span></code></p></td>
+<td><p>the network, e.g. <code class="docutils literal notranslate"><span class="pre">External/jobNNN/model.pt</span></code> (default: the shipped pan network)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Threads</p></td>
+<td><p>tracing processes (<code class="docutils literal notranslate"><span class="pre">--j</span></code>); 4 more processes read micrographs</p></td>
+</tr>
+<tr class="row-even"><td><p>Additional arguments</p></td>
+<td><p>any tracing option (<a class="reference internal" href="options.html"><span class="doc">Options</span></a>), <code class="docutils literal notranslate"><span class="pre">--max</span> <span class="pre">N</span></code>, <code class="docutils literal notranslate"><span class="pre">--qc</span> <span class="pre">N</span></code>, <code class="docutils literal notranslate"><span class="pre">--resume</span></code>, <code class="docutils literal notranslate"><span class="pre">--save_maps</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Outputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">relion_lines/lines.star</span></code> (node <code class="docutils literal notranslate"><span class="pre">MicrographCoordsGroup.star.relion.autopick</span></code>, RELION 5.1 lines),
+<code class="docutils literal notranslate"><span class="pre">relion_straight/startend.star</span></code> (<code class="docutils literal notranslate"><span class="pre">MicrographCoordsGroup.star.relion.manualpick.helixstartend</span></code>),
+<code class="docutils literal notranslate"><span class="pre">logfile.pdf</span></code> (<code class="docutils literal notranslate"><span class="pre">LogFile.pdf.relion.filamentum</span></code>), <code class="docutils literal notranslate"><span class="pre">progress.tsv</span></code>, <code class="docutils literal notranslate"><span class="pre">micrograph_stats.txt</span></code>,
+<code class="docutils literal notranslate"><span class="pre">failed.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">filament_trace_params.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">qc/</span></code> (with <code class="docutils literal notranslate"><span class="pre">--qc</span></code>), <code class="docutils literal notranslate"><span class="pre">maps/</span></code> (with <code class="docutils literal notranslate"><span class="pre">--save_maps</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Micrographs are read and Fourier-cropped to 5.2 Å/px, run through the network in batches on the GPU, traced by the pool of
+tracing processes, and written in the pixel coordinates of the original micrographs.</p>
+</section>
+<section id="selection-filamentum-select-relion">
+<h2>Selection: <code class="docutils literal notranslate"><span class="pre">filamentum-select-relion</span></code><a class="headerlink" href="#selection-filamentum-select-relion" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Input micrographs</p></td>
+<td><p>the micrographs to select from (default: the tracing job’s input)</p></td>
+</tr>
+<tr class="row-even"><td><p>Param <code class="docutils literal notranslate"><span class="pre">tracer_job</span></code></p></td>
+<td><p>the tracing job folder (several, comma-separated, e.g. shards)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Param <code class="docutils literal notranslate"><span class="pre">min</span></code></p></td>
+<td><p>lower limits, <code class="docutils literal notranslate"><span class="pre">stat=value[,stat=value]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Param <code class="docutils literal notranslate"><span class="pre">max</span></code></p></td>
+<td><p>upper limits, likewise</p></td>
+</tr>
+<tr class="row-odd"><td><p>Param <code class="docutils literal notranslate"><span class="pre">coords</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">no</span></code> to leave out the coordinate lists of the kept micrographs (default yes)</p></td>
+</tr>
+<tr class="row-even"><td><p>Outputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">micrographs.star</span></code> (node <code class="docutils literal notranslate"><span class="pre">MicrographGroupMetadata.star.relion</span></code>), <code class="docutils literal notranslate"><span class="pre">logfile.pdf</span></code>,
+<code class="docutils literal notranslate"><span class="pre">micrograph_stats.tsv</span></code>, <code class="docutils literal notranslate"><span class="pre">micrograph_stats.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">select_summary.png</span></code>, and the coordinate lists
+<code class="docutils literal notranslate"><span class="pre">relion_lines/lines.star</span></code> and <code class="docutils literal notranslate"><span class="pre">relion_straight/startend.star</span></code> of the kept micrographs</p></td>
+</tr>
+</tbody>
+</table>
+<p>The statistics are described in <a class="reference internal" href="statistics.html"><span class="doc">Micrograph statistics</span></a>. The values are shell-safe on purpose (no spaces, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>), because
+RELION passes them on a command line.</p>
+</section>
+<section id="crossing-metadata-filamentum-annotate-relion">
+<h2>Crossing metadata: <code class="docutils literal notranslate"><span class="pre">filamentum-annotate-relion</span></code><a class="headerlink" href="#crossing-metadata-filamentum-annotate-relion" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Input particles</p></td>
+<td><p>extracted (or later) particles, e.g. <code class="docutils literal notranslate"><span class="pre">Extract/jobNNN/particles.star</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Param <code class="docutils literal notranslate"><span class="pre">tracer_job</span></code></p></td>
+<td><p>the tracing job, which must have been run with <code class="docutils literal notranslate"><span class="pre">--save_maps</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Outputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">particles.star</span></code> with columns <code class="docutils literal notranslate"><span class="pre">rlnFtr*</span></code> per particle: distance to the nearest other trace, the
+length of other traces parallel and perpendicular to the particle within its CTF delocalisation
+radius, and more (<code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">annotate-relion</span> <span class="pre">--help</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>RELION carries these columns through classification and refinement. Only <code class="docutils literal notranslate"><span class="pre">rlnParticleSelectZScore</span></code> can be selected on inside
+RELION; <code class="docutils literal notranslate"><span class="pre">--zscore</span> <span class="pre">LparA</span></code> copies one metric into it.</p>
+</section>
+<section id="adding-the-jobs-from-a-script">
+<h2>Adding the jobs from a script<a class="headerlink" href="#adding-the-jobs-from-a-script" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">relion_pipeliner</span></code> adds and runs the same jobs without the GUI (run in the project folder, with RELION’s environment loaded):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">relion_pipeliner</span> <span class="o">--</span><span class="n">addJob</span> <span class="n">External</span> <span class="o">--</span><span class="n">setJobAlias</span> <span class="n">TraceAll</span> <span class="o">--</span><span class="n">addJobOptions</span> \
+  <span class="s2">"fn_exe == filamentum-trace-relion;in_mic == CtfFind/job003/micrographs_ctf.star;param1_label == ckpt;param1_value == External/job006/model.pt;nr_threads == 16;other_args == --qc 20;"</span>
+<span class="n">relion_pipeliner</span> <span class="o">--</span><span class="n">RunJobs</span> <span class="s2">"External/job007/"</span>
+</pre></div>
+</div>
+<p>The job options are those of the External job’s <code class="docutils literal notranslate"><span class="pre">job.star</span></code>: <code class="docutils literal notranslate"><span class="pre">fn_exe</span></code>, <code class="docutils literal notranslate"><span class="pre">in_mic</span></code>, <code class="docutils literal notranslate"><span class="pre">in_coords</span></code>, <code class="docutils literal notranslate"><span class="pre">in_part</span></code>, <code class="docutils literal notranslate"><span class="pre">param1_label</span></code>
+… <code class="docutils literal notranslate"><span class="pre">param10_value</span></code>, <code class="docutils literal notranslate"><span class="pre">nr_threads</span></code>, <code class="docutils literal notranslate"><span class="pre">other_args</span></code>, and the queue options <code class="docutils literal notranslate"><span class="pre">do_queue</span></code>, <code class="docutils literal notranslate"><span class="pre">qsubscript</span></code>, <code class="docutils literal notranslate"><span class="pre">qsub</span></code>. Leave an
+option out rather than giving it an empty value.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="options.html" class="btn btn-neutral float-left" title="Options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting and questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

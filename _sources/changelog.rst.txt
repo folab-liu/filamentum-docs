@@ -1,0 +1,30 @@
+Changelog
+=========
+
+0.1.0 (23 November 2026)
+------------------------
+
+First release.
+
+* Training, tracing, micrograph selection and crossing annotation as RELION External jobs.
+* Span tracer (default) and skeleton tracer; crossing avoidance (``--avoid_crossings_nm``) in both.
+* One unit convention for all options (nm, nm², degrees; Å for RELION quantities); older option names accepted.
+* Per-micrograph statistics, ``logfile.pdf`` with their distributions and correlations, QC overlays and comparison plots.
+* ``filamentum select`` with coordinate lists of the kept micrographs for the manual picker.
+* The pan network shipped as the default network and starting point for fine-tuning.
+* Traces kept 10 nm from the micrograph edge by default (``--border_nm``).
+
+0.1.1 (not yet released)
+------------------------
+
+* The span tracer (default) now cuts its traces at ``--border_nm`` (10 nm), as the skeleton tracer does. In 0.1.0 it only kept its
+  start points off the border and its traces still ran to within about a pixel of the micrograph edge, so the 10 nm default had
+  almost no effect. ``--no-border_trim`` restores the 0.1.0 behaviour; traces made before 0.1.0 used ``--border_nm 2.08``.
+* Small blobs of the thresholded mask are removed with scipy, keeping blobs of at least ``--min_blob_nm2`` (8 px at the default).
+  scikit-image 0.26 changed ``remove_small_objects``, which 0.1.0 used, so that it also removed blobs of exactly that size;
+  skeleton traces made with 0.1.0 can therefore differ slightly between scikit-image 0.25 and 0.26. 0.1.1 gives the 0.25 result
+  with either version.
+* ``filamentum check-env`` loads the shipped or given network with its own architecture (0.1.0 assumed the original full-width
+  network and failed to load ``pan.pt`` and trained networks).
+* ``filamentum agent-guide`` writes a guide for AI agents working in a RELION project.
+* Documentation (this site).

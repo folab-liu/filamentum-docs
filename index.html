@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>filamentum &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">filamentum</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="filamentum">
+<h1>filamentum<a class="headerlink" href="#filamentum" title="Link to this heading"></a></h1>
+<p>filamentum traces curved and crossing filaments in cryo-EM micrographs and writes RELION coordinates.</p>
+<p>A small U-Net (0.24 M parameters) predicts two things for every pixel of a micrograph Fourier-cropped to 5.2 Å/px: the probability
+that the pixel lies on a filament, and the direction of the filament axis. A tracer turns these maps into smooth curves that continue
+through crossings. It exports them as straight start-end pieces, which any RELION version reads, and as polylines for RELION 5.1’s
+curved extraction.</p>
+<p>The network is meant to be fine-tuned for each specimen on a few manually picked micrographs. The shipped starting network, the <em>pan
+network</em>, was trained on Aβ42 and ten other filament data sets, and fine-tuning it takes about a minute on a GPU. Training,
+tracing and micrograph selection all run as RELION <code class="docutils literal notranslate"><span class="pre">External</span></code> jobs, so picks, networks and coordinates stay in the RELION pipeline.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#check-the-gpu">Check the GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#where-the-time-goes">Where the time goes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#from-a-git-checkout">From a git checkout</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#pick-a-few-micrographs">1. Pick a few micrographs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#fine-tune-the-network">2. Fine-tune the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#check-the-tracing-on-a-sample">3. Check the tracing on a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#trace-all-micrographs">4. Trace all micrographs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#read-the-log-file">5. Read the log file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#select-micrographs">6. Select micrographs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#look-at-the-kept-micrographs">7. Look at the kept micrographs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#extract">8. Extract</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#what-the-statistics-do-and-do-not-see">What the statistics do and do not see</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#choosing-limits">Choosing limits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="options.html#units">Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#common-tracing-options">Common tracing options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#all-options">All options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="relion_jobs.html#training-filamentum-train-relion">Training: <code class="docutils literal notranslate"><span class="pre">filamentum-train-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="relion_jobs.html#tracing-filamentum-trace-relion">Tracing: <code class="docutils literal notranslate"><span class="pre">filamentum-trace-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="relion_jobs.html#selection-filamentum-select-relion">Selection: <code class="docutils literal notranslate"><span class="pre">filamentum-select-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="relion_jobs.html#crossing-metadata-filamentum-annotate-relion">Crossing metadata: <code class="docutils literal notranslate"><span class="pre">filamentum-annotate-relion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="relion_jobs.html#adding-the-jobs-from-a-script">Adding the jobs from a script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and questions</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</div>
+<p>License: GPL-3.0-or-later. A manuscript describing the method is in preparation; please cite it when it is available.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

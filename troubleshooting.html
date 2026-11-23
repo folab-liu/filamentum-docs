@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting and questions &mdash; filamentum 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using filamentum with an AI agent" href="agents.html" />
+    <link rel="prev" title="RELION External jobs" href="relion_jobs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            filamentum
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Using filamentum</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: from manual picks to extracted segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Micrograph statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relion_jobs.html">RELION External jobs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting and questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Using filamentum with an AI agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">filamentum</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting and questions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting-and-questions">
+<h1>Troubleshooting and questions<a class="headerlink" href="#troubleshooting-and-questions" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt>The progress line in <code class="docutils literal notranslate"><span class="pre">run.out</span></code> stays at 0 traced for a while</dt><dd><p>Tracing finishes in waves: all tracing processes start a micrograph at the same time, and each takes from seconds to minutes,
+longer the more crowded the micrograph. Nothing finishes for a while, then a batch at once. The progress line is printed at
+least every minute; its rate is measured over the last 5 minutes, from the first finished micrograph on.</p>
+</dd>
+<dt>Tracing is slow</dt><dd><p>Give the job more CPU cores and set <em>Number of threads</em> (<code class="docutils literal notranslate"><span class="pre">--j</span></code>) to the cores minus 4 for the reading processes; the job warns
+when it has fewer CPUs than processes. The GPU is rarely the limit. <code class="docutils literal notranslate"><span class="pre">filamentum</span> <span class="pre">check-env</span></code> times the steps on the machine.</p>
+</dd>
+<dt>The GUI number in the manual picker is not the trace length</dt><dd><p>For a lines list, RELION’s manual picker shows the number of coordinate rows, i.e. control points along the traces, not their
+length or the number of traces. <code class="docutils literal notranslate"><span class="pre">n_traces</span></code> and <code class="docutils literal notranslate"><span class="pre">length_um</span></code> are in <code class="docutils literal notranslate"><span class="pre">progress.tsv</span></code> and in the QC titles.</p>
+</dd>
+<dt>Micrographs have no traces although filaments are visible</dt><dd><p>Check the QC overlay. If short traces were dropped, lower <code class="docutils literal notranslate"><span class="pre">--min_trace_nm</span></code>; if the network misses the filaments, pick a few of
+those micrographs and fine-tune again. Micrographs with every trace shorter than <code class="docutils literal notranslate"><span class="pre">--min_trace_nm</span></code> look empty in the statistics.</p>
+</dd>
+<dt>Traces stop short of the micrograph edge</dt><dd><p>By design: <code class="docutils literal notranslate"><span class="pre">--border_nm</span></code> (10 nm) keeps traces off the edge, where extraction boxes would be cut off. <code class="docutils literal notranslate"><span class="pre">--border_nm</span> <span class="pre">2</span></code> traces
+almost to the edge.</p>
+</dd>
+<dt>Segments sit on crossings</dt><dd><p><code class="docutils literal notranslate"><span class="pre">--avoid_crossings_nm</span> <span class="pre">R</span></code> (e.g. 10) cuts traces at crossings and keeps every end at least R nm from other traces (at most 2R
+is removed from an end); compare the before/after close-ups in <code class="docutils literal notranslate"><span class="pre">qc/avoid/</span></code> of a QC run. It costs traced length on crowded
+micrographs.</p>
+</dd>
+<dt>The network was trained on data from another processing package</dt><dd><p>A network records its preprocessing (target pixel size, <code class="docutils literal notranslate"><span class="pre">--background_nm</span></code>) in its metadata, and tracing uses it. For
+micrographs from RELION’s motion correction traced with a network trained on cryoSPARC micrographs, give <code class="docutils literal notranslate"><span class="pre">--background_nm</span> <span class="pre">10</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span></code> when RELION starts the job</dt><dd><p>The executable is not executable or not found. Use the installed <code class="docutils literal notranslate"><span class="pre">filamentum-*-relion</span></code> executables (on <code class="docutils literal notranslate"><span class="pre">PATH</span></code> or with their
+full path); in a git checkout the <code class="docutils literal notranslate"><span class="pre">scripts/relion_external*.sh</span></code> wrappers must have their executable bit set.</p>
+</dd>
+<dt>A run was interrupted</dt><dd><p>Run the tracing job again in the same job folder with <code class="docutils literal notranslate"><span class="pre">--resume</span></code> added to its options; micrographs already in
+<code class="docutils literal notranslate"><span class="pre">progress.tsv</span></code> are skipped.</p>
+</dd>
+<dt>Coordinates for RELION 4.0</dt><dd><p><code class="docutils literal notranslate"><span class="pre">--relion4</span></code> writes the straight export with RELION 4’s node type; extract with <em>Coordinates are start-end only?</em> = Yes.</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="relion_jobs.html" class="btn btn-neutral float-left" title="RELION External jobs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agents.html" class="btn btn-neutral float-right" title="Using filamentum with an AI agent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Björn Forsberg (GPL-3.0-or-later).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
